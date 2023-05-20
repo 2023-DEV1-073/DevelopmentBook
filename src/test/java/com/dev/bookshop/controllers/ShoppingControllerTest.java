@@ -35,13 +35,14 @@ class ShoppingControllerTest {
 
     @Test
     void shouldGet200ResponseForPriceApi() throws Exception {
-        mvc.perform(post("/api/calculatePrice/").content("{\"isbn\": 12345 }").contentType(MediaType.APPLICATION_JSON_VALUE))
+        mvc.perform(post("/api/calculatePrice/").content("{\"isbn\": [12345] }")
+                                                .contentType(MediaType.APPLICATION_JSON_VALUE))
            .andExpect(status().isOk());
     }
 
     @Test
     void shouldGet404ResponseWhenWrongISBNPassedForPriceApi() throws Exception {
-        mvc.perform(post("/api/calculatePrice").content("{\"isbn\": 123456666 }")
+        mvc.perform(post("/api/calculatePrice").content("{\"isbn\": [123456666] }")
                                                .contentType(MediaType.APPLICATION_JSON_VALUE))
            .andExpect(status().isNotFound())
            .andExpect(content().string(ISBN_NOT_FOUND_ERROR_JSON));

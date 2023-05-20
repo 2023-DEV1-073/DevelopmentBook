@@ -1,14 +1,12 @@
 package com.dev.bookshop.controllers.model;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
 public class ShoppingCart {
-
-    @ApiModelProperty(example = "12345")
-    private String isbn;
-    
+    private List<String> isbn;
 }

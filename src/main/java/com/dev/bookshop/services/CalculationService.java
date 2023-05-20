@@ -1,7 +1,11 @@
 package com.dev.bookshop.services;
 
+
+import com.dev.bookshop.controllers.model.ShoppingCart;
+import com.dev.bookshop.services.model.Price;
+
 public interface CalculationService {
 
-    String getPrice(String isbn);
+    Price getPrice(ShoppingCart shoppingCart);
 
 }
