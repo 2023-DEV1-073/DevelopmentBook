@@ -1,8 +1,8 @@
 package com.dev.bookshop.services;
 
 
-import com.dev.bookshop.controllers.model.ShoppingCart;
 import com.dev.bookshop.services.model.Price;
+import com.dev.bookshop.services.model.ShoppingCart;
 
 public interface CalculationService {
 

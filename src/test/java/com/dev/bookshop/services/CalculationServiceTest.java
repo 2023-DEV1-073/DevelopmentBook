@@ -1,7 +1,8 @@
 package com.dev.bookshop.services;
 
-import com.dev.bookshop.controllers.model.ShoppingCart;
+import com.dev.bookshop.services.model.Book;
 import com.dev.bookshop.services.model.Price;
+import com.dev.bookshop.services.model.ShoppingCart;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -23,15 +24,13 @@ class CalculationServiceTest {
 
     @Test
     void calculateBookPriceFor1Book() {
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setIsbn(Collections.singletonList(ISBN_FOR_CLEAN_CODE_BOOK));
+        ShoppingCart shoppingCart = new ShoppingCart(Collections.singletonList(Book.CLEAN_CODE));
         Assert.assertEquals(BOOK_PRICE_FOR_1_BOOK, calculationService.getPrice(shoppingCart).getTotalPrice());
     }
 
     @Test
-    void calculateFivePercentageDiscountForTwoDifferentBooks() {
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setIsbn(Arrays.asList(ISBN_FOR_CLEAN_CODER_BOOK, ISBN_FOR_CLEAN_CODE_BOOK));
+    void calculate5PercentageDiscountFor2DifferentBooks() {
+        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(Book.CLEAN_CODER, Book.CLEAN_CODE));
         Price price = calculationService.getPrice(shoppingCart);
         Assert.assertEquals(DISCOUNTED_PRICE_FOR_2_BOOKS, price.getDiscountedPrice());
         Assert.assertEquals(BOOK_PRICE_FOR_2_BOOK, price.getTotalPrice());

@@ -42,8 +42,8 @@ public class ShoppingController {
             @ApiResponse(code = 200, message = "Success", response = Price.class),
             @ApiResponse(code = 404, message = "Not Found", response = ExceptionResponse.class)})
     @PostMapping(value = "calculatePrice", produces = "application/json")
-    public ResponseEntity<Price> getCalculatedPrice(@RequestBody ShoppingCart shoppingCart) {
+    public ResponseEntity<Price> getCalculatedPrice(@RequestBody ShoppingCart request) {
         return ResponseEntity.status(HttpStatus.OK)
-                             .body(calculationService.getPrice(shoppingCart));
+                             .body(calculationService.getPrice(mapper.toShoppingCart(request)));
     }
 }
