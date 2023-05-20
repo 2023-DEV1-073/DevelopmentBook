@@ -3,6 +3,9 @@ package com.dev.bookshop.services.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 @AllArgsConstructor
 @Getter
 public enum Book {
@@ -19,4 +22,10 @@ public enum Book {
     final String yearOfPublish;
     final String price;
 
+    public static Book findByISBN(String isbn) {
+        return Arrays.stream(Book.values())
+                     .filter(p -> Objects.equals(p.getIsbn(), isbn))
+                     .findAny()
+                     .orElse(null);
+    }
 }
