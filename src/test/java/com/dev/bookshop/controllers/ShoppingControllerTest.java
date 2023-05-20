@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static com.dev.bookshop.constants.TestConstants.ALL_BOOK_DETAILS_JSON;
+import static com.dev.bookshop.constants.TestConstants.ISBN_NOT_FOUND_ERROR_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -36,5 +37,13 @@ class ShoppingControllerTest {
     void shouldGet200ResponseForPriceApi() throws Exception {
         mvc.perform(post("/api/calculatePrice/").content("{\"isbn\": 12345 }").contentType(MediaType.APPLICATION_JSON_VALUE))
            .andExpect(status().isOk());
+    }
+
+    @Test
+    void shouldGet404ResponseWhenWrongISBNPassedForPriceApi() throws Exception {
+        mvc.perform(post("/api/calculatePrice").content("{\"isbn\": 123456666 }")
+                                               .contentType(MediaType.APPLICATION_JSON_VALUE))
+           .andExpect(status().isNotFound())
+           .andExpect(content().string(ISBN_NOT_FOUND_ERROR_JSON));
     }
 }

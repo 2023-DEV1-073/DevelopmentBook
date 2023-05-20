@@ -1,5 +1,6 @@
 package com.dev.bookshop.services.model;
 
+import com.dev.bookshop.exception.ISBNNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -26,6 +27,6 @@ public enum Book {
         return Arrays.stream(Book.values())
                      .filter(p -> Objects.equals(p.getIsbn(), isbn))
                      .findAny()
-                     .orElse(null);
+                     .orElseThrow(ISBNNotFoundException::new);
     }
 }
