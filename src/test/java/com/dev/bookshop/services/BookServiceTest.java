@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
 import java.util.List;
+
+import static com.dev.bookshop.constants.TestConstants.COLLECTION_OF_ISBN;
+import static com.dev.bookshop.constants.TestConstants.NO_OF_UNIQUE_BOOKS;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -20,10 +22,9 @@ class BookServiceTest {
 
     @Test
     void shouldGetAll5BookDetail() {
-        List<String> collectionOfISBN = Arrays.asList("12345", "23451", "34512", "45123", "51234");
         List<Book> books = bookService.getAll();
-        Assert.assertEquals(5, books.size());
-        books.forEach(book -> Assert.assertTrue(collectionOfISBN.contains(book.getIsbn())));
+        Assert.assertEquals(NO_OF_UNIQUE_BOOKS, Integer.valueOf(books.size()));
+        books.forEach(book -> Assert.assertTrue(COLLECTION_OF_ISBN.contains(book.getIsbn())));
     }
 
 }
