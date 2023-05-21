@@ -15,9 +15,12 @@ public final class TestConstants {
     public static final String DUPLICATE_BOOK_ENTRY_ERROR_JSON = "{\"message\":\"There are duplicate ISBN 12345, Remove it and request again\"}";
     public static final Integer NO_OF_UNIQUE_BOOKS = 5;
     public static final Integer DISCOUNT_APPLIED_FOR_2_BOOKS = 5;
+    public static final Integer DISCOUNT_APPLIED_FOR_3_BOOKS = 10;
     public static final Double BOOK_PRICE_FOR_1_BOOK = 50.0;
     public static final Double BOOK_PRICE_FOR_2_BOOK = 100.0;
+    public static final Double BOOK_PRICE_FOR_3_BOOK = 150.0;
     public static final Double DISCOUNTED_PRICE_FOR_2_BOOKS = 95.0;
+    public static final Double DISCOUNTED_PRICE_FOR_3_BOOKS = 135.0;
 
 
 }

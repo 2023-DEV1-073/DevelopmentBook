@@ -36,4 +36,14 @@ class CalculationServiceTest {
         Assert.assertEquals(BOOK_PRICE_FOR_2_BOOK, price.getTotalPrice());
         Assert.assertEquals(DISCOUNT_APPLIED_FOR_2_BOOKS, price.getDiscountApplied());
     }
+
+    @Test
+    void calculateTenPercentageDiscountForThreeDifferentBooks() {
+        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(Book.CLEAN_CODER, Book.CLEAN_CODE, Book.CLEAN_ARCHITECTURE));
+        Price price = calculationService.getPrice(shoppingCart);
+        Assert.assertEquals(DISCOUNTED_PRICE_FOR_3_BOOKS, price.getDiscountedPrice());
+        Assert.assertEquals(BOOK_PRICE_FOR_3_BOOK, price.getTotalPrice());
+        Assert.assertEquals(DISCOUNT_APPLIED_FOR_3_BOOKS, price.getDiscountApplied());
+    }
+
 }
