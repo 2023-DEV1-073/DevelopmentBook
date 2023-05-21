@@ -19,7 +19,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({EmptyCartException.class, DuplicateISBNException.class, MandatoryDetailMissingException.class})
+    @ExceptionHandler({EmptyCartException.class, DuplicateISBNException.class, MandatoryDetailMissingException.class, MinimumQuantityException.class})
     public final ResponseEntity<ExceptionResponse> handleBadRequestException(Exception exception) {
 
         ExceptionResponse exceptionResponse = new ExceptionResponse(exception.getMessage());

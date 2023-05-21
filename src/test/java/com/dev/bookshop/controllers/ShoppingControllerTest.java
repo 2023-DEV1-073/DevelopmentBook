@@ -85,4 +85,12 @@ class ShoppingControllerTest {
            .andExpect(status().isOk()).andExpect(content().string(INVOICE_RESPONSE_FOR_ONE_BOOK_TWO_QUANTITY));
     }
 
+    @Test
+    void shouldGet400ResponseWhenQuantityPassedAsLessThanMinimumToPriceApi() throws Exception {
+        mvc.perform(post("/api/calculatePrice").content("{\"bookOrders\":[{ \"isbn\":\"12345\",\"quantity\":0}]}")
+                                               .contentType(MediaType.APPLICATION_JSON_VALUE))
+           .andExpect(status().isBadRequest())
+           .andExpect(content().string(MINIMUM_BOOK_QUANTITY_ERROR_JSON));
+    }
+
 }

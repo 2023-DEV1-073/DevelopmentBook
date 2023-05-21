@@ -5,6 +5,7 @@ import com.dev.bookshop.controllers.model.ShoppingCart;
 import com.dev.bookshop.exception.DuplicateISBNException;
 import com.dev.bookshop.exception.EmptyCartException;
 import com.dev.bookshop.exception.MandatoryDetailMissingException;
+import com.dev.bookshop.exception.MinimumQuantityException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +24,7 @@ public final class ShoppingCartValidator {
         checkForEmptyCart(shoppingCart);
         checkMandatoryDetailsInBookOrder(shoppingCart);
         checkDuplicateItemsInCart(shoppingCart);
+        checkMinimumQuantityInOrder(shoppingCart);
     }
 
     private static void checkForEmptyCart(ShoppingCart shoppingCart) {
@@ -58,6 +60,14 @@ public final class ShoppingCartValidator {
             }
             if (bookOrder.getQuantity() == null) {
                 throw new MandatoryDetailMissingException(QUANTITY_DETAIL_MISSING_ERROR);
+            }
+        }
+    }
+
+    private static void checkMinimumQuantityInOrder(ShoppingCart shoppingCart) {
+        for (BookOrder bookOrder : shoppingCart.getBookOrders()) {
+            if (bookOrder.getQuantity() <= 0) {
+                throw new MinimumQuantityException();
             }
         }
     }
