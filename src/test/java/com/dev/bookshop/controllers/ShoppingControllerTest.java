@@ -7,8 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.dev.bookshop.constants.TestConstants.ALL_BOOK_DETAILS_JSON;
-import static com.dev.bookshop.constants.TestConstants.ISBN_NOT_FOUND_ERROR_JSON;
+import static com.dev.bookshop.constants.TestConstants.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -47,4 +46,12 @@ class ShoppingControllerTest {
            .andExpect(status().isNotFound())
            .andExpect(content().string(ISBN_NOT_FOUND_ERROR_JSON));
     }
+
+    @Test
+    void shouldGet400ResponseWhenEmptyRequestPassedForPriceApi() throws Exception {
+        mvc.perform(post("/api/calculatePrice").content("{}").contentType(MediaType.APPLICATION_JSON_VALUE))
+           .andExpect(status().isBadRequest())
+           .andExpect(content().string(EMPTY_CART_ERROR_JSON));
+    }
+
 }
