@@ -30,7 +30,8 @@ public class ShoppingController {
 
     @ApiOperation(value = "Get All Books", notes = "Returns all available books")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = BookDetail[].class)})
+            @ApiResponse(code = 200, message = "Success", response = BookDetail[].class),
+            @ApiResponse(code = 500, message = "Internal server error", response = ExceptionResponse.class)})
     @GetMapping(value = "books", produces = "application/json")
     public ResponseEntity<List<BookDetail>> getAllBooks() {
         return ResponseEntity.status(HttpStatus.OK)
@@ -40,7 +41,9 @@ public class ShoppingController {
     @ApiOperation(value = "get the calculated book price ", notes = "get the calculated book price")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = Invoice.class),
-            @ApiResponse(code = 404, message = "Not Found", response = ExceptionResponse.class)})
+            @ApiResponse(code = 400, message = "Bad Request - Duplicate entries/Minimum quantity missing/Cart is empty", response = ExceptionResponse.class),
+            @ApiResponse(code = 404, message = "Not found - ISBN Not found", response = ExceptionResponse.class),
+            @ApiResponse(code = 500, message = "Internal server error", response = ExceptionResponse.class)})
     @PostMapping(value = "calculatePrice", produces = "application/json")
     public ResponseEntity<Invoice> getCalculatedPrice(@RequestBody ShoppingCart request) {
         Invoice invoice = mapper.toInvoice(calculationService.getInvoice(mapper.toShoppingCart(request)));
