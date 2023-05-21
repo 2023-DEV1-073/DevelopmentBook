@@ -1,9 +1,6 @@
 package com.dev.bookshop.services;
 
-import com.dev.bookshop.services.model.Book;
-import com.dev.bookshop.services.model.DifferentBook;
-import com.dev.bookshop.services.model.Invoice;
-import com.dev.bookshop.services.model.ShoppingCart;
+import com.dev.bookshop.services.model.*;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -130,5 +127,27 @@ class CalculationServiceTest {
                                                                    .getBooks()
                                                                    .size());
 
+    }
+
+    @Test
+    void calculateTwentyPercentageDiscountForFourDifferentBooksAndAnotherTwentyPercentageDiscountForFourDifferentBooks() {
+        DifferentBook bookOne = new DifferentBook(Book.CLEAN_CODER, 2);
+        DifferentBook bookTwo = new DifferentBook(Book.CLEAN_CODE, 2);
+        DifferentBook bookThree = new DifferentBook(Book.CLEAN_ARCHITECTURE, 2);
+        DifferentBook bookFour = new DifferentBook(Book.LEGACY_CODE, 1);
+        DifferentBook bookFive = new DifferentBook(Book.TEST_DRIVEN_DEVELOPMENT, 1);
+        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(bookOne, bookTwo, bookThree, bookFour, bookFive));
+        Invoice invoice = calculationService.getInvoice(shoppingCart);
+        Assert.assertEquals(DISCOUNTED_PRICE_FOR_2_GROUP_OF_4_BOOKS, invoice.getDiscountedPrice());
+        Assert.assertEquals(BOOK_PRICE_FOR_8_BOOK, invoice.getTotalPrice());
+
+        Assert.assertEquals(TWO.intValue(), invoice.getGroupOfDifferentBooks().size());
+
+        for (GroupOfDifferentBook groupOfDifferentBook : invoice.getGroupOfDifferentBooks()) {
+            Assert.assertEquals(BOOK_PRICE_FOR_4_BOOK, groupOfDifferentBook.getTotalPrice());
+            Assert.assertEquals(DISCOUNTED_PRICE_FOR_4_BOOKS, groupOfDifferentBook.getDiscountedPrice());
+            Assert.assertEquals(DISCOUNT_APPLIED_FOR_4_BOOKS, groupOfDifferentBook.getDiscountApplied());
+            Assert.assertEquals(FOUR_BOOKS_IN_A_GROUP.intValue(), groupOfDifferentBook.getBooks().size());
+        }
     }
 }

@@ -5,6 +5,7 @@ import com.dev.bookshop.services.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,19 +13,33 @@ import java.util.stream.Collectors;
 @Service
 public class CalculationServiceImpl implements CalculationService {
 
+    private static final Integer INDEX_OF_BEST_PRICE_INVOICE = 0;
+    private static final Integer MINIMUM_BOOK_IN_A_GROUP = 1;
+
     @Override
     public Invoice getInvoice(ShoppingCart shoppingCart) {
-        return new Invoice(groupByDifferentBooks(shoppingCart));
+        List<Invoice> invoices = processIntoPossibleInvoices(shoppingCart);
+        return selectInvoiceWithBestPrice(invoices);
     }
 
-    private List<GroupOfDifferentBook> groupByDifferentBooks(ShoppingCart shoppingCart) {
+    private List<Invoice> processIntoPossibleInvoices(ShoppingCart shoppingCart) {
+        List<Invoice> possibleInvoices = new ArrayList<>();
+        for (Integer maximumNumberOfBooksInAGroup = shoppingCart.getDifferentBooks().size();
+             maximumNumberOfBooksInAGroup >= MINIMUM_BOOK_IN_A_GROUP; maximumNumberOfBooksInAGroup--) {
+            possibleInvoices.add(groupByDifferentBooks(shoppingCart, maximumNumberOfBooksInAGroup));
+        }
+        return possibleInvoices;
+    }
+
+    private Invoice groupByDifferentBooks(ShoppingCart shoppingCart, Integer maximumNumberOfBooksInAGroup) {
         List<GroupOfDifferentBook> groupingOfDifferentBooks = new ArrayList<>();
         List<DifferentBook> clonedDifferentBooks = getClonedDifferentBooks(shoppingCart);
         while (!clonedDifferentBooks.isEmpty()) {
-            GroupOfDifferentBook differentBooks = createNextGroup(clonedDifferentBooks);
+            maximumNumberOfBooksInAGroup = updateMaximumNumberOfBooksInAGroup(maximumNumberOfBooksInAGroup, clonedDifferentBooks.size());
+            GroupOfDifferentBook differentBooks = createNextGroup(clonedDifferentBooks, maximumNumberOfBooksInAGroup);
             groupingOfDifferentBooks.add(differentBooks);
         }
-        return groupingOfDifferentBooks;
+        return new Invoice(groupingOfDifferentBooks);
     }
 
     private List<DifferentBook> getClonedDifferentBooks(ShoppingCart shoppingCart) {
@@ -33,9 +48,15 @@ public class CalculationServiceImpl implements CalculationService {
                            .collect(Collectors.toList());
     }
 
-    private GroupOfDifferentBook createNextGroup(List<DifferentBook> remainingBooks) {
+    private Integer updateMaximumNumberOfBooksInAGroup(Integer maximumNumberOfBooksInAGroup, Integer numberOfDifferentBooksToBeProcessed) {
+        if (maximumNumberOfBooksInAGroup > numberOfDifferentBooksToBeProcessed) {
+            return numberOfDifferentBooksToBeProcessed;
+        }
+        return maximumNumberOfBooksInAGroup;
+    }
+
+    private GroupOfDifferentBook createNextGroup(List<DifferentBook> remainingBooks, Integer maximumDifferentBooks) {
         HashSet<Book> books = new HashSet<>();
-        Integer maximumDifferentBooks = remainingBooks.size();
         for (DifferentBook differentBook : new ArrayList<>(remainingBooks)) {
             books.add(differentBook.getBook());
             updateRemainingBooks(remainingBooks, differentBook);
@@ -64,6 +85,11 @@ public class CalculationServiceImpl implements CalculationService {
 
     private boolean isMaximumDifferentBooksGrouped(HashSet<Book> books, Integer maxSetSize) {
         return books.size() == maxSetSize;
+    }
+
+    private Invoice selectInvoiceWithBestPrice(List<Invoice> invoices) {
+        invoices.sort(Comparator.comparing(Invoice::getDiscountedPrice));
+        return invoices.get(INDEX_OF_BEST_PRICE_INVOICE);
     }
 
 }
