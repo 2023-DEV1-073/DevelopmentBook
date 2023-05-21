@@ -29,6 +29,7 @@ public final class TestConstants {
     public static final Double DISCOUNTED_PRICE_FOR_3_BOOKS = 135.0;
     public static final Double DISCOUNTED_PRICE_FOR_4_BOOKS = 160.0;
     public static final Double DISCOUNTED_PRICE_FOR_5_BOOKS = 187.5;
+    public static final Double DISCOUNTED_PRICE_FOR_2_BOOKS_AND_1_SAME_BOOK = 145.0;
 
 
 }
