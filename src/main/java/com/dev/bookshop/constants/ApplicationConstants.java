@@ -10,4 +10,5 @@ public final class ApplicationConstants {
     public static final String EMPTY_CART_ERROR = "Cart is Empty, add items and request again";
     public static final String DUPLICATE_BOOK_ENTRY_ERROR = "There are duplicate ISBN {}, Remove it and request again";
     public static final String ISBN_DETAIL_MISSING_ERROR = "ISBN is mandatory detail, Add detail and request again";
+    public static final String QUANTITY_DETAIL_MISSING_ERROR = "Quantity is mandatory detail, Add detail and request again";
 }

@@ -14,8 +14,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.dev.bookshop.constants.ApplicationConstants.DUPLICATE_BOOK_ENTRY_ERROR;
-import static com.dev.bookshop.constants.ApplicationConstants.ISBN_DETAIL_MISSING_ERROR;
+import static com.dev.bookshop.constants.ApplicationConstants.*;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ShoppingCartValidator {
@@ -23,6 +22,7 @@ public final class ShoppingCartValidator {
     public static void validateShoppingCart(ShoppingCart shoppingCart) {
         checkForEmptyCart(shoppingCart);
         checkMandatoryISBNInBookOrder(shoppingCart);
+        checkMandatoryQuantityInBookOrder(shoppingCart);
         checkDuplicateItemsInCart(shoppingCart);
     }
 
@@ -56,6 +56,14 @@ public final class ShoppingCartValidator {
         for (BookOrder bookOrder : shoppingCart.getBookOrders()) {
             if (StringUtils.isBlank(bookOrder.getIsbn())) {
                 throw new MandatoryDetailMissingException(ISBN_DETAIL_MISSING_ERROR);
+            }
+        }
+    }
+
+    private static void checkMandatoryQuantityInBookOrder(ShoppingCart shoppingCart) {
+        for (BookOrder bookOrder : shoppingCart.getBookOrders()) {
+            if (bookOrder.getQuantity() == null) {
+                throw new MandatoryDetailMissingException(QUANTITY_DETAIL_MISSING_ERROR);
             }
         }
     }

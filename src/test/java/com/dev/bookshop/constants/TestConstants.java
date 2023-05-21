@@ -14,6 +14,7 @@ public final class TestConstants {
     public static final String EMPTY_CART_ERROR_JSON = "{\"message\":\"Cart is Empty, add items and request again\"}";
     public static final String DUPLICATE_BOOK_ENTRY_ERROR_JSON = "{\"message\":\"There are duplicate ISBN 12345, Remove it and request again\"}";
     public static final String ISBN_MISSING_ERROR_JSON = "{\"message\":\"ISBN is mandatory detail, Add detail and request again\"}";
+    public static final String QUANTITY_MISSING_ERROR_JSON = "{\"message\":\"Quantity is mandatory detail, Add detail and request again\"}";
     public static final Integer NO_OF_UNIQUE_BOOKS = 5;
     public static final Integer DISCOUNT_APPLIED_FOR_2_BOOKS = 5;
     public static final Integer DISCOUNT_APPLIED_FOR_3_BOOKS = 10;
