@@ -1,6 +1,7 @@
 package com.dev.bookshop.services;
 
 import com.dev.bookshop.services.model.Book;
+import com.dev.bookshop.services.model.DifferentBook;
 import com.dev.bookshop.services.model.Price;
 import com.dev.bookshop.services.model.ShoppingCart;
 import org.junit.Assert;
@@ -24,13 +25,16 @@ class CalculationServiceTest {
 
     @Test
     void calculateBookPriceFor1Book() {
-        ShoppingCart shoppingCart = new ShoppingCart(Collections.singletonList(Book.CLEAN_CODE));
+        DifferentBook differentBook = new DifferentBook(Book.CLEAN_CODE, 1);
+        ShoppingCart shoppingCart = new ShoppingCart(Collections.singletonList(differentBook));
         Assert.assertEquals(BOOK_PRICE_FOR_1_BOOK, calculationService.getPrice(shoppingCart).getTotalPrice());
     }
 
     @Test
     void calculate5PercentageDiscountFor2DifferentBooks() {
-        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(Book.CLEAN_CODER, Book.CLEAN_CODE));
+        DifferentBook bookOne = new DifferentBook(Book.CLEAN_CODER, 1);
+        DifferentBook bookTwo = new DifferentBook(Book.CLEAN_CODE, 1);
+        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(bookOne, bookTwo));
         Price price = calculationService.getPrice(shoppingCart);
         Assert.assertEquals(DISCOUNTED_PRICE_FOR_2_BOOKS, price.getDiscountedPrice());
         Assert.assertEquals(BOOK_PRICE_FOR_2_BOOK, price.getTotalPrice());
@@ -39,7 +43,10 @@ class CalculationServiceTest {
 
     @Test
     void calculateTenPercentageDiscountForThreeDifferentBooks() {
-        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(Book.CLEAN_CODER, Book.CLEAN_CODE, Book.CLEAN_ARCHITECTURE));
+        DifferentBook bookOne = new DifferentBook(Book.CLEAN_CODER, 1);
+        DifferentBook bookTwo = new DifferentBook(Book.CLEAN_CODE, 1);
+        DifferentBook bookThree = new DifferentBook(Book.CLEAN_ARCHITECTURE, 1);
+        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(bookOne, bookTwo, bookThree));
         Price price = calculationService.getPrice(shoppingCart);
         Assert.assertEquals(DISCOUNTED_PRICE_FOR_3_BOOKS, price.getDiscountedPrice());
         Assert.assertEquals(BOOK_PRICE_FOR_3_BOOK, price.getTotalPrice());
@@ -48,7 +55,11 @@ class CalculationServiceTest {
 
     @Test
     void calculateTwentyPercentageDiscountForFourDifferentBooks() {
-        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(Book.CLEAN_CODER, Book.CLEAN_CODE, Book.CLEAN_ARCHITECTURE, Book.LEGACY_CODE));
+        DifferentBook bookOne = new DifferentBook(Book.CLEAN_CODER, 1);
+        DifferentBook bookTwo = new DifferentBook(Book.CLEAN_CODE, 1);
+        DifferentBook bookThree = new DifferentBook(Book.CLEAN_ARCHITECTURE, 1);
+        DifferentBook bookFour = new DifferentBook(Book.LEGACY_CODE, 1);
+        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(bookOne, bookTwo, bookThree, bookFour));
         Price price = calculationService.getPrice(shoppingCart);
         Assert.assertEquals(DISCOUNTED_PRICE_FOR_4_BOOKS, price.getDiscountedPrice());
         Assert.assertEquals(BOOK_PRICE_FOR_4_BOOK, price.getTotalPrice());
@@ -57,11 +68,15 @@ class CalculationServiceTest {
 
     @Test
     void calculateTwentyFivePercentageDiscountForFiveDifferentBooks() {
-        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(Book.values()));
+        DifferentBook bookOne = new DifferentBook(Book.CLEAN_CODER, 1);
+        DifferentBook bookTwo = new DifferentBook(Book.CLEAN_CODE, 1);
+        DifferentBook bookThree = new DifferentBook(Book.CLEAN_ARCHITECTURE, 1);
+        DifferentBook bookFour = new DifferentBook(Book.LEGACY_CODE, 1);
+        DifferentBook bookFive = new DifferentBook(Book.TEST_DRIVEN_DEVELOPMENT, 1);
+        ShoppingCart shoppingCart = new ShoppingCart(Arrays.asList(bookOne, bookTwo, bookThree, bookFour, bookFive));
         Price price = calculationService.getPrice(shoppingCart);
         Assert.assertEquals(DISCOUNTED_PRICE_FOR_5_BOOKS, price.getDiscountedPrice());
         Assert.assertEquals(BOOK_PRICE_FOR_5_BOOK, price.getTotalPrice());
         Assert.assertEquals(DISCOUNT_APPLIED_FOR_5_BOOKS, price.getDiscountApplied());
     }
-
 }

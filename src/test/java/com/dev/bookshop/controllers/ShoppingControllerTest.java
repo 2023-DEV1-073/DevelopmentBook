@@ -34,14 +34,14 @@ class ShoppingControllerTest {
 
     @Test
     void shouldGet200ResponseForPriceApi() throws Exception {
-        mvc.perform(post("/api/calculatePrice/").content("{\"isbn\": [12345] }")
+        mvc.perform(post("/api/calculatePrice/").content("{\"bookOrders\":[{ \"isbn\": \"12345\",\"quantity\":1}]}")
                                                 .contentType(MediaType.APPLICATION_JSON_VALUE))
            .andExpect(status().isOk());
     }
 
     @Test
     void shouldGet404ResponseWhenWrongISBNPassedForPriceApi() throws Exception {
-        mvc.perform(post("/api/calculatePrice").content("{\"isbn\": [123456666] }")
+        mvc.perform(post("/api/calculatePrice").content("{\"bookOrders\":[{ \"isbn\": \"123456666\",\"quantity\":1}]}")
                                                .contentType(MediaType.APPLICATION_JSON_VALUE))
            .andExpect(status().isNotFound())
            .andExpect(content().string(ISBN_NOT_FOUND_ERROR_JSON));
@@ -56,7 +56,7 @@ class ShoppingControllerTest {
 
     @Test
     void shouldGet400ResponseWhenDuplicateBooksPassedForPriceApi() throws Exception {
-        mvc.perform(post("/api/calculatePrice").content("{\"isbn\": [12345, 12345] }")
+        mvc.perform(post("/api/calculatePrice").content("{\"bookOrders\":[{ \"isbn\": \"12345\",\"quantity\":1},{ \"isbn\": \"12345\",\"quantity\":1}]}")
                                                .contentType(MediaType.APPLICATION_JSON_VALUE))
            .andExpect(status().isBadRequest())
            .andExpect(content().string(DUPLICATE_BOOK_ENTRY_ERROR_JSON));

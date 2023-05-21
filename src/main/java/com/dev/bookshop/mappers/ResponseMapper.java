@@ -1,7 +1,9 @@
 package com.dev.bookshop.mappers;
 
 import com.dev.bookshop.controllers.model.BookDetail;
+import com.dev.bookshop.controllers.model.BookOrder;
 import com.dev.bookshop.services.model.Book;
+import com.dev.bookshop.services.model.DifferentBook;
 import com.dev.bookshop.services.model.ShoppingCart;
 import org.mapstruct.Mapper;
 
@@ -17,9 +19,9 @@ public interface ResponseMapper {
 
     default ShoppingCart toShoppingCart(com.dev.bookshop.controllers.model.ShoppingCart source) {
         validateShoppingCart(source);
-        List<Book> books = new ArrayList<>();
-        for (String isbn : source.getIsbn()) {
-            books.add(Book.findByISBN(isbn));
+        List<DifferentBook> books = new ArrayList<>();
+        for (BookOrder bookOrder : source.getBookOrders()) {
+            books.add(new DifferentBook(Book.findByISBN(bookOrder.getIsbn()), bookOrder.getQuantity()));
         }
         return new ShoppingCart(books);
     }

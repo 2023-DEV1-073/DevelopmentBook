@@ -18,7 +18,8 @@ public class CalculationServiceImpl implements CalculationService {
     }
 
     private Double getTotalPrice(ShoppingCart shoppingCart) {
-        return shoppingCart.getDifferentBooks().stream().mapToDouble(s -> Double.parseDouble(s.getPrice())).sum();
+        return shoppingCart.getDifferentBooks().stream().mapToDouble(s -> Double.parseDouble(s.getBook().getPrice()))
+                           .sum();
     }
 
     private Double getDiscountedPrice(Double totalPrice, Integer discount) {

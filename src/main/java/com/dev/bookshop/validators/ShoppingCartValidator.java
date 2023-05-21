@@ -1,5 +1,6 @@
 package com.dev.bookshop.validators;
 
+import com.dev.bookshop.controllers.model.BookOrder;
 import com.dev.bookshop.controllers.model.ShoppingCart;
 import com.dev.bookshop.exception.DuplicateISBNException;
 import com.dev.bookshop.exception.EmptyCartException;
@@ -23,7 +24,7 @@ public final class ShoppingCartValidator {
     }
 
     private static void checkForEmptyCart(ShoppingCart shoppingCart) {
-        if (shoppingCart == null || CollectionUtils.isEmpty(shoppingCart.getIsbn())) {
+        if (shoppingCart == null || CollectionUtils.isEmpty(shoppingCart.getBookOrders())) {
             throw new EmptyCartException();
         }
     }
@@ -36,7 +37,11 @@ public final class ShoppingCartValidator {
     }
 
     private static String getDuplicateIsbns(ShoppingCart shoppingCart) {
-        return shoppingCart.getIsbn().stream()
+
+        return shoppingCart.getBookOrders().stream()
+                           .map(BookOrder::getIsbn)
+                           .collect(Collectors.toList())
+                           .stream()
                            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                            .entrySet()
                            .stream()
