@@ -21,8 +21,7 @@ public final class ShoppingCartValidator {
 
     public static void validateShoppingCart(ShoppingCart shoppingCart) {
         checkForEmptyCart(shoppingCart);
-        checkMandatoryISBNInBookOrder(shoppingCart);
-        checkMandatoryQuantityInBookOrder(shoppingCart);
+        checkMandatoryDetailsInBookOrder(shoppingCart);
         checkDuplicateItemsInCart(shoppingCart);
     }
 
@@ -52,16 +51,11 @@ public final class ShoppingCartValidator {
                            .collect(Collectors.joining(","));
     }
 
-    private static void checkMandatoryISBNInBookOrder(ShoppingCart shoppingCart) {
+    private static void checkMandatoryDetailsInBookOrder(ShoppingCart shoppingCart) {
         for (BookOrder bookOrder : shoppingCart.getBookOrders()) {
             if (StringUtils.isBlank(bookOrder.getIsbn())) {
                 throw new MandatoryDetailMissingException(ISBN_DETAIL_MISSING_ERROR);
             }
-        }
-    }
-
-    private static void checkMandatoryQuantityInBookOrder(ShoppingCart shoppingCart) {
-        for (BookOrder bookOrder : shoppingCart.getBookOrders()) {
             if (bookOrder.getQuantity() == null) {
                 throw new MandatoryDetailMissingException(QUANTITY_DETAIL_MISSING_ERROR);
             }
