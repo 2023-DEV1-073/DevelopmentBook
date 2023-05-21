@@ -17,13 +17,16 @@ public final class TestConstants {
     public static final Integer DISCOUNT_APPLIED_FOR_2_BOOKS = 5;
     public static final Integer DISCOUNT_APPLIED_FOR_3_BOOKS = 10;
     public static final Integer DISCOUNT_APPLIED_FOR_4_BOOKS = 20;
+    public static final Integer DISCOUNT_APPLIED_FOR_5_BOOKS = 25;
     public static final Double BOOK_PRICE_FOR_1_BOOK = 50.0;
     public static final Double BOOK_PRICE_FOR_2_BOOK = 100.0;
     public static final Double BOOK_PRICE_FOR_3_BOOK = 150.0;
     public static final Double BOOK_PRICE_FOR_4_BOOK = 200.0;
+    public static final Double BOOK_PRICE_FOR_5_BOOK = 250.0;
     public static final Double DISCOUNTED_PRICE_FOR_2_BOOKS = 95.0;
     public static final Double DISCOUNTED_PRICE_FOR_3_BOOKS = 135.0;
     public static final Double DISCOUNTED_PRICE_FOR_4_BOOKS = 160.0;
+    public static final Double DISCOUNTED_PRICE_FOR_5_BOOKS = 187.5;
 
 
 }
