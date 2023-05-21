@@ -78,4 +78,11 @@ class ShoppingControllerTest {
            .andExpect(content().string(QUANTITY_MISSING_ERROR_JSON));
     }
 
+    @Test
+    void shouldGetInvoiceResponseForPriceApi() throws Exception {
+        mvc.perform(post("/api/calculatePrice/").content("{\"bookOrders\":[{ \"isbn\": \"12345\",\"quantity\":2}]}")
+                                                .contentType(MediaType.APPLICATION_JSON_VALUE))
+           .andExpect(status().isOk()).andExpect(content().string(INVOICE_RESPONSE_FOR_ONE_BOOK_TWO_QUANTITY));
+    }
+
 }

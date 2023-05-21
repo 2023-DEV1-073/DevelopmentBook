@@ -2,6 +2,7 @@ package com.dev.bookshop.mappers;
 
 import com.dev.bookshop.controllers.model.BookDetail;
 import com.dev.bookshop.controllers.model.BookOrder;
+import com.dev.bookshop.controllers.model.Invoice;
 import com.dev.bookshop.services.model.Book;
 import com.dev.bookshop.services.model.DifferentBook;
 import com.dev.bookshop.services.model.ShoppingCart;
@@ -25,5 +26,7 @@ public interface ResponseMapper {
         }
         return new ShoppingCart(books);
     }
+
+    Invoice toInvoice(com.dev.bookshop.services.model.Invoice source);
 
 }

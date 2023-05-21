@@ -15,6 +15,7 @@ public final class TestConstants {
     public static final String DUPLICATE_BOOK_ENTRY_ERROR_JSON = "{\"message\":\"There are duplicate ISBN 12345, Remove it and request again\"}";
     public static final String ISBN_MISSING_ERROR_JSON = "{\"message\":\"ISBN is mandatory detail, Add detail and request again\"}";
     public static final String QUANTITY_MISSING_ERROR_JSON = "{\"message\":\"Quantity is mandatory detail, Add detail and request again\"}";
+    public static final String INVOICE_RESPONSE_FOR_ONE_BOOK_TWO_QUANTITY = "{\"groupOfDifferentBooks\":[{\"books\":[{\"title\":\"Clean Code\",\"isbn\":\"12345\",\"authorName\":\"Robert Martin\",\"yearOfPublish\":\"2008\",\"price\":\"50\"}],\"discountApplied\":\"0\",\"totalPrice\":\"50.0\",\"discountedPrice\":\"50.0\"},{\"books\":[{\"title\":\"Clean Code\",\"isbn\":\"12345\",\"authorName\":\"Robert Martin\",\"yearOfPublish\":\"2008\",\"price\":\"50\"}],\"discountApplied\":\"0\",\"totalPrice\":\"50.0\",\"discountedPrice\":\"50.0\"}],\"totalPrice\":\"100.0\",\"discountedPrice\":\"100.0\"}";
     public static final Integer NO_OF_UNIQUE_BOOKS = 5;
     public static final Integer DISCOUNT_APPLIED_FOR_1_BOOK = 0;
     public static final Integer DISCOUNT_APPLIED_FOR_2_BOOKS = 5;

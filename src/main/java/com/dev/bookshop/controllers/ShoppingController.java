@@ -2,11 +2,11 @@ package com.dev.bookshop.controllers;
 
 import com.dev.bookshop.controllers.model.BookDetail;
 import com.dev.bookshop.controllers.model.ExceptionResponse;
+import com.dev.bookshop.controllers.model.Invoice;
 import com.dev.bookshop.controllers.model.ShoppingCart;
 import com.dev.bookshop.mappers.ResponseMapper;
 import com.dev.bookshop.services.BookService;
 import com.dev.bookshop.services.CalculationService;
-import com.dev.bookshop.services.model.Invoice;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -43,7 +43,7 @@ public class ShoppingController {
             @ApiResponse(code = 404, message = "Not Found", response = ExceptionResponse.class)})
     @PostMapping(value = "calculatePrice", produces = "application/json")
     public ResponseEntity<Invoice> getCalculatedPrice(@RequestBody ShoppingCart request) {
-        return ResponseEntity.status(HttpStatus.OK)
-                             .body(calculationService.getInvoice(mapper.toShoppingCart(request)));
+        Invoice invoice = mapper.toInvoice(calculationService.getInvoice(mapper.toShoppingCart(request)));
+        return ResponseEntity.status(HttpStatus.OK).body(invoice);
     }
 }
