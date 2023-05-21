@@ -1,42 +1,20 @@
 package com.dev.bookshop.services.impl;
 
 import com.dev.bookshop.services.CalculationService;
+import com.dev.bookshop.services.model.DiscountOffer;
 import com.dev.bookshop.services.model.Price;
 import com.dev.bookshop.services.model.ShoppingCart;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class CalculationServiceImpl implements CalculationService {
-
-    public static final int TWO_BOOKS = 2;
-    public static final int THREE_BOOKS = 3;
-    public static final int FOUR_BOOKS = 4;
-    public static final int FIVE_BOOKS = 5;
-    public static final Integer DISCOUNT_FIVE = 5;
-    public static final Integer DISCOUNT_TEN = 10;
-    public static final Integer DISCOUNT_TWENTY = 20;
-    public static final Integer DISCOUNT_TWENTY_FIVE = 25;
-    public static final Integer DISCOUNT_ZERO = 0;
 
     @Override
     public Price getPrice(ShoppingCart shoppingCart) {
         Double totalPrice = getTotalPrice(shoppingCart);
-        if (shoppingCart.getDifferentBooks().size() == TWO_BOOKS) {
-            Double discountedPrice = getDiscountedPrice(totalPrice, DISCOUNT_FIVE);
-            return new Price(totalPrice, discountedPrice, DISCOUNT_FIVE);
-        } else if (shoppingCart.getDifferentBooks().size() == THREE_BOOKS) {
-            Double discountedPrice = getDiscountedPrice(totalPrice, DISCOUNT_TEN);
-            return new Price(totalPrice, discountedPrice, DISCOUNT_TEN);
-        } else if (shoppingCart.getDifferentBooks().size() == FOUR_BOOKS) {
-            Double discountedPrice = getDiscountedPrice(totalPrice, DISCOUNT_TWENTY);
-            return new Price(totalPrice, discountedPrice, DISCOUNT_TWENTY);
-        } else if (shoppingCart.getDifferentBooks().size() == FIVE_BOOKS) {
-            Double discountedPrice = getDiscountedPrice(totalPrice, DISCOUNT_TWENTY_FIVE);
-            return new Price(totalPrice, discountedPrice, DISCOUNT_TWENTY_FIVE);
-        } else {
-            return new Price(totalPrice, totalPrice, DISCOUNT_ZERO);
-        }
+        Integer discount = DiscountOffer.findDiscountByNumberOfDifferentBooks(shoppingCart.getDifferentBooks().size());
+        Double discountedPrice = getDiscountedPrice(totalPrice, discount);
+        return new Price(totalPrice, discountedPrice, discount);
     }
 
     private Double getTotalPrice(ShoppingCart shoppingCart) {
