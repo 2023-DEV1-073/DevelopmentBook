@@ -17,13 +17,18 @@ import static com.dev.bookshop.constants.ApplicationConstants.DUPLICATE_BOOK_ENT
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ShoppingCartValidator {
 
-    public static void checkForEmptyCart(ShoppingCart shoppingCart) {
+    public static void validateShoppingCart(ShoppingCart shoppingCart) {
+        checkForEmptyCart(shoppingCart);
+        checkDuplicateItemsInCart(shoppingCart);
+    }
+
+    private static void checkForEmptyCart(ShoppingCart shoppingCart) {
         if (shoppingCart == null || CollectionUtils.isEmpty(shoppingCart.getIsbn())) {
             throw new EmptyCartException();
         }
     }
 
-    public static void checkDuplicateItemsInCart(ShoppingCart shoppingCart) throws DuplicateISBNException {
+    private static void checkDuplicateItemsInCart(ShoppingCart shoppingCart) {
         String duplicateIsbns = getDuplicateIsbns(shoppingCart);
         if (StringUtils.isNotBlank(duplicateIsbns)) {
             throw new DuplicateISBNException(DUPLICATE_BOOK_ENTRY_ERROR.replace("{}", duplicateIsbns));
