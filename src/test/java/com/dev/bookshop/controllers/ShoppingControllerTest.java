@@ -62,4 +62,12 @@ class ShoppingControllerTest {
            .andExpect(content().string(DUPLICATE_BOOK_ENTRY_ERROR_JSON));
     }
 
+    @Test
+    void shouldGet400ResponseWhenISBNNotPassedForPriceApi() throws Exception {
+        mvc.perform(post("/api/calculatePrice").content("{\"bookOrders\":[{ \"quantity\":1}]}")
+                                               .contentType(MediaType.APPLICATION_JSON_VALUE))
+           .andExpect(status().isBadRequest())
+           .andExpect(content().string(ISBN_MISSING_ERROR_JSON));
+    }
+
 }
